@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Profile - DollarVault</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f7fb;
+            min-height: 100vh;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            padding: 30px 15px;
+        }
+
+        .profile-container {
+            width: 100%;
+            max-width: 420px;
+            background: #ffffff;
+
+            padding: 38px 35px;
+
+            border-radius: 16px;
+
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.08);
+
+            text-align: center;
+        }
+
+        /* LOGO */
+
+        .logo-symbol {
+            width: 58px;
+            height: 58px;
+
+            margin: 0 auto 12px;
+
+            border-radius: 50%;
+
+            background: #111827;
+            color: #ffffff;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 30px;
+            font-weight: bold;
+        }
+
+        .logo-name {
+            font-size: 26px;
+            font-weight: 700;
+
+            color: #111827;
+
+            margin-bottom: 8px;
+        }
+
+        .logo-name span {
+            color: #16a34a;
+        }
+
+        .subtitle {
+            color: #6b7280;
+            font-size: 14px;
+
+            margin-bottom: 30px;
+        }
+
+        /* PROFILE */
+
+        .profile-title {
+            font-size: 23px;
+            color: #111827;
+
+            margin-bottom: 8px;
+        }
+
+        .profile-description {
+            color: #6b7280;
+            font-size: 14px;
+
+            margin-bottom: 25px;
+        }
+
+        /* FORM */
+
+        .form-group {
+            text-align: left;
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+
+            font-size: 14px;
+            font-weight: 600;
+
+            color: #374151;
+
+            margin-bottom: 8px;
+        }
+
+        .form-group input {
+            width: 100%;
+            height: 46px;
+
+            padding: 0 13px;
+
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+
+            font-size: 14px;
+
+            outline: none;
+        }
+
+        .form-group input:focus {
+            border-color: #16a34a;
+        }
+
+        .form-group input[readonly] {
+            background: #f3f4f6;
+            color: #6b7280;
+        }
+
+        /* BUTTON */
+
+        .save-btn {
+            width: 100%;
+            height: 47px;
+
+            margin-top: 5px;
+
+            border: none;
+            border-radius: 8px;
+
+            background: #111827;
+            color: #ffffff;
+
+            font-size: 15px;
+            font-weight: 600;
+
+            cursor: pointer;
+        }
+
+        .save-btn:hover {
+            background: #000000;
+        }
+
+        /* MESSAGE */
+
+        .message {
+            display: none;
+
+            margin-top: 15px;
+
+            padding: 11px;
+
+            border-radius: 8px;
+
+            font-size: 13px;
+        }
+
+        .success {
+            display: block;
+
+            background: #ecfdf5;
+            color: #166534;
+
+            border: 1px solid #bbf7d0;
+        }
+
+        .error {
+            display: block;
+
+            background: #fef2f2;
+            color: #b91c1c;
+
+            border: 1px solid #fecaca;
+        }
+
+        /* DEMO INFORMATION */
+
+        .demo-info {
+            margin-top: 22px;
+
+            padding: 13px;
+
+            background: #f9fafb;
+
+            border-radius: 8px;
+
+            color: #6b7280;
+
+            font-size: 12px;
+            line-height: 1.5;
+
+            text-align: left;
+        }
+
+        .demo-info strong {
+            color: #374151;
+        }
+
+        /* BACK */
+
+        .back-link {
+            display: inline-block;
+
+            margin-top: 20px;
+
+            color: #374151;
+
+            text-decoration: none;
+
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .back-link:hover {
+            color: #16a34a;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 480px) {
+
+            .profile-container {
+                padding: 30px 22px;
+            }
+
+            .logo-name {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="profile-container">
+
+        <!-- LOGO -->
+
+        <div class="logo-symbol">
+            $
+        </div>
+
+        <div class="logo-name">
+            <span>Dollar</span>Vault
+        </div>
+
+        <p class="subtitle">
+            Manage your digital wallet account
+        </p>
+
+
+        <!-- PROFILE TITLE -->
+
+        <h1 class="profile-title">
+            My Profile
+        </h1>
+
+        <p class="profile-description">
+            Manage your DollarVault demo account
+        </p>
+
+
+        <!-- FORM -->
+
+        <form id="profileForm">
+
+            <div class="form-group">
+
+                <label for="fullName">
+                    Full Name
+                </label>
+
+                <input
+                    type="text"
+                    id="fullName"
+                    value=""
+                    placeholder="Enter your full name"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="email">
+                    Email Address
+                </label>
+
+                <input
+                    type="email"
+                    id="email"
+                    value=""
+                    placeholder="Enter your email"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="accountType">
+                    Account Type
+                </label>
+
+                <input
+                    type="text"
+                    id="accountType"
+                    value="Customer"
+                    readonly
+                >
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="save-btn"
+            >
+                Save Changes
+            </button>
+
+        </form>
+
+
+        <!-- MESSAGE -->
+
+        <div
+            id="message"
+            class="message"
+        ></div>
+
+
+        <!-- DEMO INFO -->
+
+        <div class="demo-info">
+
+            <strong>Demo Account</strong><br>
+
+            Profile information is connected to your DollarVault demo account. Changes are currently for demo/testing purposes only.
+
+        </div>
+
+
+        <!-- BACK -->
+
+        <a
+            href="dashboard.html"
+            class="back-link"
+        >
+            ← Back to Dashboard
+        </a>
+
+    </div>
+
+
+    <script>
+
+        const savedUser = localStorage.getItem("dollarVaultUser");
+
+if (!savedUser) {
+    window.location.href = "login.html";
+} else {
+    const user = JSON.parse(savedUser);
+
+    document.getElementById("fullName").value = user.name;
+    document.getElementById("email").value = user.email;
+}
+
+        const profileForm =
+            document.getElementById("profileForm");
+
+        profileForm.addEventListener("submit", function(event) {
+
+            event.preventDefault();
+
+            const name =
+                document.getElementById("fullName").value.trim();
+
+            const email =
+                document.getElementById("email").value.trim();
+
+            const message =
+                document.getElementById("message");
+
+
+            message.className = "message";
+
+
+            if (name === "" || email === "") {
+
+                message.textContent =
+                    "Please enter your name and email.";
+
+                message.classList.add("error");
+
+                return;
+            }
+
+
+            message.textContent =
+                "✓ Profile changes saved for this demo.";
+
+            message.classList.add("success");
+
+        });
+
+    </script>
+
+</body>
+</html>

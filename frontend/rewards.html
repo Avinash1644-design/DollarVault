@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rewards - DollarVault</title>
+
+```
+<style>
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        font-family: Arial, Helvetica, sans-serif;
+        background: #f4f7fb;
+        color: #111827;
+        min-height: 100vh;
+    }
+
+    .header {
+        background: #ffffff;
+        border-bottom: 1px solid #e5e7eb;
+    }
+
+    .header-inner {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 18px 30px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        text-decoration: none;
+    }
+
+    .logo-icon {
+        width: 42px;
+        height: 42px;
+        border-radius: 11px;
+        background: #16a34a;
+        color: #ffffff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 25px;
+        font-weight: 700;
+    }
+
+    .brand-name {
+        font-size: 22px;
+        font-weight: 700;
+        letter-spacing: -0.5px;
+        color: #111827;
+    }
+
+    .brand-name .dollar {
+        color: #16a34a;
+    }
+
+    .nav {
+        display: flex;
+        align-items: center;
+        gap: 28px;
+    }
+
+    .nav a {
+        text-decoration: none;
+        color: #4b5563;
+        font-size: 15px;
+        font-weight: 600;
+        transition: color 0.2s ease;
+    }
+
+    .nav a:hover {
+        color: #16a34a;
+    }
+
+    .container {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 42px 25px 60px;
+    }
+
+    .back-button {
+        display: inline-block;
+        margin-bottom: 25px;
+        text-decoration: none;
+        color: #16a34a;
+        font-size: 15px;
+        font-weight: 600;
+    }
+
+    .back-button:hover {
+        color: #15803d;
+    }
+
+    .page-title {
+        text-align: center;
+        margin-bottom: 35px;
+    }
+
+    .page-title h1 {
+        font-size: 32px;
+        margin-bottom: 9px;
+        color: #111827;
+    }
+
+    .page-title p {
+        color: #6b7280;
+        font-size: 15px;
+    }
+
+    .overview-card {
+        background: #ffffff;
+        border: 1px solid #e5e7eb;
+        border-radius: 18px;
+        padding: 30px;
+        box-shadow: 0 8px 25px rgba(15, 23, 42, 0.06);
+    }
+
+    .overview-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 25px;
+    }
+
+    .overview-top h2 {
+        font-size: 20px;
+        color: #111827;
+    }
+
+    .rate-badge {
+        background: #ecfdf3;
+        color: #15803d;
+        padding: 8px 14px;
+        border-radius: 20px;
+        font-size: 14px;
+        font-weight: 700;
+    }
+
+    .stats {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 18px;
+    }
+
+    .stat-card {
+        background: #f8fafc;
+        border: 1px solid #e5e7eb;
+        border-radius: 14px;
+        padding: 22px;
+    }
+
+    .stat-label {
+        color: #6b7280;
+        font-size: 14px;
+        margin-bottom: 10px;
+    }
+
+    .stat-value {
+        font-size: 25px;
+        font-weight: 700;
+        color: #111827;
+    }
+
+    .reward-value {
+        color: #16a34a;
+    }
+
+    .history-card {
+        margin-top: 22px;
+        background: #ffffff;
+        border: 1px solid #e5e7eb;
+        border-radius: 18px;
+        padding: 30px;
+        box-shadow: 0 8px 25px rgba(15, 23, 42, 0.05);
+    }
+
+    .history-card h2 {
+        font-size: 20px;
+        margin-bottom: 20px;
+    }
+
+    .empty {
+        border: 1px dashed #d1d5db;
+        border-radius: 12px;
+        padding: 30px;
+        text-align: center;
+        color: #6b7280;
+        background: #f9fafb;
+    }
+
+    .notice {
+        margin-top: 25px;
+        padding: 17px 20px;
+        border-radius: 12px;
+        background: #fff7ed;
+        border: 1px solid #fed7aa;
+        color: #9a3412;
+        font-size: 14px;
+        line-height: 1.6;
+    }
+
+    .error-message {
+        color: #dc2626;
+        text-align: center;
+        padding: 20px;
+    }
+
+    @media (max-width: 700px) {
+
+        .header-inner {
+            padding: 16px 20px;
+        }
+
+        .brand-name {
+            font-size: 19px;
+        }
+
+        .logo-icon {
+            width: 39px;
+            height: 39px;
+            font-size: 23px;
+        }
+
+        .nav {
+            gap: 15px;
+        }
+
+        .nav a {
+            font-size: 14px;
+        }
+
+        .container {
+            padding: 32px 18px 45px;
+        }
+
+        .page-title h1 {
+            font-size: 27px;
+        }
+
+        .overview-card,
+        .history-card {
+            padding: 22px;
+        }
+
+        .stats {
+            grid-template-columns: 1fr;
+        }
+
+        .overview-top {
+            align-items: flex-start;
+            gap: 12px;
+        }
+    }
+
+    @media (max-width: 480px) {
+
+        .header-inner {
+            padding: 15px;
+        }
+
+        .brand {
+            gap: 8px;
+        }
+
+        .brand-name {
+            font-size: 17px;
+        }
+
+        .logo-icon {
+            width: 36px;
+            height: 36px;
+            font-size: 21px;
+        }
+
+        .nav {
+            gap: 11px;
+        }
+
+        .nav a {
+            font-size: 13px;
+        }
+    }
+</style>
+```
+
+</head>
+
+<body>
+
+```
+<header class="header">
+    <div class="header-inner">
+
+        <a href="dashboard.html" class="brand">
+            <div class="logo-icon">$</div>
+
+            <div class="brand-name">
+                <span class="dollar">Dollar</span>Vault
+            </div>
+        </a>
+
+        <nav class="nav">
+            <a href="dashboard.html">Dashboard</a>
+            <a href="profile.html">Profile</a>
+        </nav>
+
+    </div>
+</header>
+
+<main class="container">
+
+
+    <div class="page-title">
+
+        <h1>Rewards</h1>
+
+        <p>
+            View your simulated reward information
+        </p>
+
+    </div>
+
+
+    <section class="overview-card">
+
+        <div class="overview-top">
+
+            <h2>
+                Reward Overview
+            </h2>
+
+            <div class="rate-badge">
+                3% Reward Rate
+            </div>
+
+        </div>
+
+
+        <div class="stats">
+
+            <div class="stat-card">
+
+                <div class="stat-label">
+                    Current Balance
+                </div>
+
+                <div
+                    class="stat-value"
+                    id="currentBalance"
+                >
+                    $0.00
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-label">
+                    Reward Rate
+                </div>
+
+                <div class="stat-value">
+                    3%
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-label">
+                    Estimated Reward
+                </div>
+
+                <div
+                    class="stat-value reward-value"
+                    id="estimatedReward"
+                >
+                    $0.00
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <section class="history-card">
+
+        <h2>
+            Reward History
+        </h2>
+
+        <div class="empty">
+
+            <p>
+                No rewards yet.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <div class="notice">
+
+        <strong>Simulated Rewards:</strong>
+
+        Reward amounts shown on this page are for project demonstration
+        and interface testing only. They are not real investment returns.
+
+    </div>
+
+</main>
+
+
+<script>
+
+    const API_URL = "http://127.0.0.1:3000";
+
+    const savedUser = localStorage.getItem("dollarVaultUser");
+
+    if (!savedUser) {
+        window.location.href = "login.html";
+    }
+
+    let user = null;
+
+    try {
+        user = JSON.parse(savedUser);
+    } catch (error) {
+
+        localStorage.removeItem("dollarVaultUser");
+
+        window.location.href = "login.html";
+    }
+
+
+    async function loadRewards() {
+
+        const balanceElement =
+            document.getElementById("currentBalance");
+
+        const rewardElement =
+            document.getElementById("estimatedReward");
+
+
+        try {
+
+            const response = await fetch(
+                API_URL +
+                "/api/customer/transactions?userId=" +
+                encodeURIComponent(user.id)
+            );
+
+
+            const transactions = await response.json();
+
+
+            if (
+                !response.ok ||
+                !Array.isArray(transactions)
+            ) {
+
+                throw new Error(
+                    "Unable to load transactions."
+                );
+            }
+
+
+            let balance = 0;
+
+
+            transactions.forEach(function(transaction) {
+
+                const amount =
+                    Number(transaction.amount) || 0;
+
+
+                if (
+                    transaction.type === "Deposit" &&
+                    transaction.status === "Completed"
+                ) {
+
+                    balance += amount;
+                }
+
+
+                if (
+                    transaction.type === "Withdrawal" &&
+                    transaction.status === "Completed"
+                ) {
+
+                    balance -= amount;
+                }
+
+            });
+
+
+            const reward = balance * 0.03;
+
+
+            balanceElement.textContent =
+                "$" + balance.toFixed(2);
+
+            rewardElement.textContent =
+                "$" + reward.toFixed(2);
+
+
+        } catch (error) {
+
+            console.error(
+                "Rewards loading error:",
+                error
+            );
+
+            balanceElement.textContent = "$0.00";
+
+            rewardElement.textContent = "$0.00";
+        }
+
+    }
+
+
+    loadRewards();
+
+</script>
+```
+
+</body>
+
+</html>

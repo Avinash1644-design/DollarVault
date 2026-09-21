@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DollarVault - Login</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f4f7fb;
+    color: #172033;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-container {
+    width: 100%;
+    max-width: 430px;
+    padding: 20px;
+}
+
+.logo-section {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.logo {
+    width: 58px;
+    height: 58px;
+    border-radius: 16px;
+    background: #16a34a;
+    color: #ffffff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 12px;
+}
+
+.brand {
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.brand-dollar {
+    color: #16a34a;
+}
+
+.brand-vault {
+    color: #172033;
+}
+
+.subtitle {
+    color: #6b7280;
+    font-size: 14px;
+    margin-top: 7px;
+}
+
+.card {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 16px;
+    padding: 30px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+}
+
+h1 {
+    font-size: 25px;
+    margin-bottom: 8px;
+    color: #172033;
+}
+
+.card-subtitle {
+    color: #6b7280;
+    font-size: 14px;
+    margin-bottom: 25px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+input {
+    width: 100%;
+    padding: 13px 14px;
+    border: 1px solid #d1d5db;
+    border-radius: 9px;
+    font-size: 14px;
+    outline: none;
+    margin-bottom: 18px;
+}
+
+input:focus {
+    border-color: #16a34a;
+}
+
+button {
+    width: 100%;
+    border: none;
+    border-radius: 9px;
+    padding: 14px;
+    background: #16a34a;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #15803d;
+}
+
+button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.message {
+    display: none;
+    margin-bottom: 18px;
+    padding: 12px 14px;
+    border-radius: 9px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.message.success {
+    display: block;
+    background: #f0fdf4;
+    color: #15803d;
+    border: 1px solid #bbf7d0;
+}
+
+.message.error {
+    display: block;
+    background: #fef2f2;
+    color: #b91c1c;
+    border: 1px solid #fecaca;
+}
+
+.create-account {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 13px;
+    color: #6b7280;
+}
+
+.create-account a {
+    color: #16a34a;
+    text-decoration: none;
+    font-weight: 700;
+}
+
+.create-account a:hover {
+    text-decoration: underline;
+}
+
+.notice {
+    margin-top: 18px;
+    text-align: center;
+    color: #9ca3af;
+    font-size: 11px;
+    line-height: 1.5;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="login-container">
+
+```
+<div class="logo-section">
+
+    <div class="logo">$</div>
+
+    <div class="brand">
+        <span class="brand-dollar">Dollar</span><span class="brand-vault">Vault</span>
+    </div>
+
+    <div class="subtitle">
+        Secure simulated wallet platform
+    </div>
+
+</div>
+
+<div class="card">
+
+    <h1>Welcome Back</h1>
+
+    <p class="card-subtitle">
+        Login to access your DollarVault account.
+    </p>
+
+    <div id="message" class="message"></div>
+
+    <form id="loginForm">
+
+        <label for="email">
+            Email Address
+        </label>
+
+        <input
+            type="email"
+            id="email"
+            placeholder="Enter your email"
+            required
+        >
+
+        <label for="password">
+            Password
+        </label>
+
+        <input
+            type="password"
+            id="password"
+            placeholder="Enter your password"
+            required
+        >
+
+        <button type="submit" id="loginButton">
+            Login
+        </button>
+
+    </form>
+
+    <div class="create-account">
+        Don't have an account?
+        <a href="create-account.html">Create Account</a>
+    </div>
+
+</div>
+
+<div class="notice">
+    Simulated Platform — No real money or cryptocurrency is processed.
+</div>
+```
+
+</div>
+
+<script>
+
+const API_URL = "http://localhost:3000";
+
+const loginForm = document.getElementById("loginForm");
+const emailInput = document.getElementById("email");
+const passwordInput = document.getElementById("password");
+const loginButton = document.getElementById("loginButton");
+const message = document.getElementById("message");
+
+
+function showMessage(text, type) {
+
+    message.textContent = text;
+    message.className = "message " + type;
+}
+
+
+loginForm.addEventListener("submit", async function(event) {
+
+    event.preventDefault();
+
+    const email = emailInput.value.trim();
+    const password = passwordInput.value;
+
+    loginButton.disabled = true;
+    loginButton.textContent = "Logging in...";
+
+    try {
+
+        const response = await fetch(
+            API_URL + "/api/login",
+            {
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+                    email: email,
+                    password: password
+                })
+            }
+        );
+
+        const data = await response.json();
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.message || "Login failed."
+            );
+        }
+
+        /*
+         * The backend returns the customer account.
+         * Save the complete response so other customer
+         * pages can use the customer ID and balance.
+         */
+
+        const user = data.user || data.customer || data;
+
+        if (!user.id) {
+
+            throw new Error(
+                "Customer ID was not returned by the server."
+            );
+        }
+
+        localStorage.setItem(
+            "dollarVaultUser",
+            JSON.stringify({
+                id: user.id,
+                name: user.name || user.fullName || "",
+                email: user.email || email,
+                balance: Number(user.balance || 0),
+                accountType: user.accountType || "Customer"
+            })
+        );
+
+        showMessage(
+            "Login successful!",
+            "success"
+        );
+
+        setTimeout(function() {
+
+            window.location.href = "dashboard.html";
+
+        }, 700);
+
+    } catch (error) {
+
+        console.error(error);
+
+        showMessage(
+            error.message || "Unable to connect to the DollarVault server.",
+            "error"
+        );
+
+    } finally {
+
+        loginButton.disabled = false;
+        loginButton.textContent = "Login";
+    }
+
+});
+
+</script>
+
+</body>
+</html>

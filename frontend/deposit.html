@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DollarVault - Deposit</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f4f7fb;
+    color: #172033;
+}
+
+header {
+    height: 72px;
+    background: #ffffff;
+    border-bottom: 1px solid #e5e7eb;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 28px;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.logo {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    background: #16a34a;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 23px;
+    font-weight: bold;
+}
+
+.brand-name {
+    display: flex;
+    align-items: center;
+}
+
+.brand-dollar {
+    color: #16a34a;
+}
+
+.brand-vault {
+    color: #111827;
+}
+
+.back {
+    color: #16a34a;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.container {
+    max-width: 650px;
+    margin: 45px auto;
+    padding: 0 20px;
+}
+
+.card {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 16px;
+    padding: 30px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.04);
+}
+
+h1 {
+    font-size: 28px;
+    margin-bottom: 8px;
+}
+
+.subtitle {
+    color: #6b7280;
+    font-size: 14px;
+    margin-bottom: 28px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+input {
+    width: 100%;
+    padding: 13px 14px;
+    border: 1px solid #d1d5db;
+    border-radius: 9px;
+    font-size: 14px;
+    outline: none;
+    margin-bottom: 20px;
+}
+
+input:focus {
+    border-color: #16a34a;
+}
+
+.wallet-field {
+    background: #f8fafc;
+    color: #4b5563;
+    cursor: not-allowed;
+}
+
+.wallet-note {
+    margin-top: -10px;
+    margin-bottom: 20px;
+    color: #6b7280;
+    font-size: 12px;
+}
+
+button {
+    width: 100%;
+    border: none;
+    border-radius: 9px;
+    padding: 14px;
+    background: #16a34a;
+    color: white;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #15803d;
+}
+
+button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.message {
+    display: none;
+    margin-bottom: 20px;
+    padding: 12px 14px;
+    border-radius: 9px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.message.success {
+    display: block;
+    background: #f0fdf4;
+    color: #15803d;
+    border: 1px solid #bbf7d0;
+}
+
+.message.error {
+    display: block;
+    background: #fef2f2;
+    color: #b91c1c;
+    border: 1px solid #fecaca;
+}
+
+.notice {
+    margin-top: 22px;
+    padding: 14px;
+    border-radius: 10px;
+    background: #fff7ed;
+    border: 1px solid #fed7aa;
+    color: #9a3412;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+@media (max-width: 600px) {
+    .container {
+        margin: 25px auto;
+    }
+
+    .card {
+        padding: 22px;
+    }
+
+    header {
+        padding: 0 18px;
+    }
+}
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+```
+<div class="brand">
+
+    <div class="logo">$</div>
+
+    <div class="brand-name">
+        <span class="brand-dollar">Dollar</span><span class="brand-vault">Vault</span>
+    </div>
+
+</div>
+
+<a href="dashboard.html" class="back">
+    ← Dashboard
+</a>
+```
+
+</header>
+
+<div class="container">
+
+```
+<div class="card">
+
+    <h1>Deposit</h1>
+
+    <p class="subtitle">
+        Add simulated USDT to your DollarVault balance.
+    </p>
+
+    <div id="message" class="message"></div>
+
+    <form id="depositForm">
+
+        <label for="amount">
+            Deposit Amount (USDT)
+        </label>
+
+        <input
+            type="number"
+            id="amount"
+            min="1"
+            step="0.01"
+            placeholder="Enter amount"
+            required
+        >
+
+        <label for="walletAddress">
+            Platform Wallet Address
+        </label>
+
+        <input
+            type="text"
+            id="walletAddress"
+            class="wallet-field"
+            value="0x40Cc04702D07D6bFf2A18A76DEC469b8b123bdD4"
+            readonly
+        >
+
+        <div class="wallet-note">
+            This platform wallet address is fixed and cannot be changed.
+        </div>
+
+        <button type="submit" id="depositButton">
+            Submit Deposit
+        </button>
+
+    </form>
+
+    <div class="notice">
+        <strong>Simulated Platform:</strong>
+        Deposits on this website are for testing only.
+        No real cryptocurrency or money is transferred.
+    </div>
+
+</div>
+```
+
+</div>
+
+<script>
+
+const API_URL = "http://localhost:3000";
+
+const PLATFORM_WALLET =
+    "0x40Cc04702D07D6bFf2A18A76DEC469b8b123bdD4";
+
+const form = document.getElementById("depositForm");
+const amountInput = document.getElementById("amount");
+const walletInput = document.getElementById("walletAddress");
+const button = document.getElementById("depositButton");
+const message = document.getElementById("message");
+
+function showMessage(text, type) {
+    message.textContent = text;
+    message.className = "message " + type;
+}
+
+form.addEventListener("submit", async function(event) {
+
+    event.preventDefault();
+
+    const amount = Number(amountInput.value);
+
+    if (!amount || amount <= 0) {
+        showMessage(
+            "Please enter a valid deposit amount.",
+            "error"
+        );
+        return;
+    }
+
+    const storedUser =
+        localStorage.getItem("dollarVaultUser");
+
+    if (!storedUser) {
+        showMessage(
+            "Please log in before making a deposit.",
+            "error"
+        );
+        return;
+    }
+
+    let user;
+
+    try {
+        user = JSON.parse(storedUser);
+    } catch (error) {
+        showMessage(
+            "Your login session is invalid. Please log in again.",
+            "error"
+        );
+        return;
+    }
+
+    const userId = user.id || user.userId;
+
+    if (!userId) {
+        showMessage(
+            "Customer account information is missing. Please log in again.",
+            "error"
+        );
+        return;
+    }
+
+    button.disabled = true;
+    button.textContent = "Processing...";
+
+    try {
+
+        const response = await fetch(
+            API_URL + "/api/deposit",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    userId: userId,
+                    amount: amount,
+                    walletAddress: PLATFORM_WALLET
+                })
+            }
+        );
+
+        let data;
+
+        try {
+            data = await response.json();
+        } catch (jsonError) {
+            throw new Error(
+                "The server returned an invalid response."
+            );
+        }
+
+        if (!response.ok) {
+            throw new Error(
+                data.message || "Unable to record deposit."
+            );
+        }
+
+        if (data.user) {
+
+            localStorage.setItem(
+                "dollarVaultUser",
+                JSON.stringify(data.user)
+            );
+
+        } else {
+
+            user.balance = data.balance;
+
+            localStorage.setItem(
+                "dollarVaultUser",
+                JSON.stringify(user)
+            );
+        }
+
+        showMessage(
+            data.message || "Deposit completed successfully.",
+            "success"
+        );
+
+        amountInput.value = "";
+        walletInput.value = PLATFORM_WALLET;
+
+        setTimeout(function() {
+            window.location.href = "dashboard.html";
+        }, 1000);
+
+    } catch (error) {
+
+        console.error("Deposit error:", error);
+
+        showMessage(
+            error.message || "Unable to record deposit.",
+            "error"
+        );
+
+    } finally {
+
+        button.disabled = false;
+        button.textContent = "Submit Deposit";
+    }
+
+});
+
+</script>
+
+</body>
+</html>

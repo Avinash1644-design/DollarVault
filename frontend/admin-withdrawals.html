@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DollarVault - Admin Withdrawals</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f4f7fb;
+    color: #172033;
+}
+
+header {
+    height: 72px;
+    background: #ffffff;
+    border-bottom: 1px solid #e5e7eb;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 28px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 22px;
+    font-weight: 700;
+    color: #111827;
+}
+
+.logo-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    background: #16a34a;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 23px;
+    font-weight: bold;
+}
+
+.admin-badge {
+    background: #172033;
+    color: white;
+    padding: 8px 13px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+}
+
+.layout {
+    display: flex;
+    min-height: calc(100vh - 72px);
+}
+
+.sidebar {
+    width: 240px;
+    background: #172033;
+    color: white;
+    padding: 25px 16px;
+    flex-shrink: 0;
+}
+
+.sidebar-title {
+    font-size: 12px;
+    color: #9ca3af;
+    font-weight: bold;
+    margin: 0 12px 12px;
+    letter-spacing: 1px;
+}
+
+.sidebar a {
+    display: block;
+    text-decoration: none;
+    color: #d1d5db;
+    padding: 12px;
+    border-radius: 9px;
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+.sidebar a:hover {
+    background: #253047;
+    color: white;
+}
+
+.sidebar a.active {
+    background: #16a34a;
+    color: white;
+}
+
+.main {
+    flex: 1;
+    padding: 34px;
+    min-width: 0;
+}
+
+.back-link {
+    display: inline-block;
+    color: #16a34a;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.back-link:hover {
+    text-decoration: underline;
+}
+
+.page-heading {
+    margin-bottom: 25px;
+}
+
+.page-heading h1 {
+    font-size: 30px;
+    margin-bottom: 7px;
+}
+
+.page-heading p {
+    color: #6b7280;
+    font-size: 14px;
+}
+
+.table-card {
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+}
+
+.table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    min-width: 1100px;
+    border-collapse: collapse;
+}
+
+thead {
+    background: #f8fafc;
+}
+
+th {
+    text-align: left;
+    padding: 15px 16px;
+    font-size: 11px;
+    color: #6b7280;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+td {
+    padding: 16px;
+    border-bottom: 1px solid #eef0f3;
+    font-size: 13px;
+    vertical-align: middle;
+}
+
+tbody tr:last-child td {
+    border-bottom: none;
+}
+
+tbody tr:hover {
+    background: #fafafa;
+}
+
+.txn-id {
+    font-weight: 700;
+    color: #172033;
+}
+
+.amount {
+    font-weight: 700;
+    color: #111827;
+}
+
+.wallet {
+    font-family: monospace;
+    font-size: 12px;
+    color: #4b5563;
+}
+
+.status {
+    display: inline-block;
+    padding: 6px 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: bold;
+}
+
+.status.pending {
+    background: #fff7ed;
+    color: #c2410c;
+}
+
+.status.completed {
+    background: #f0fdf4;
+    color: #15803d;
+}
+
+.status.rejected {
+    background: #fef2f2;
+    color: #dc2626;
+}
+
+.actions {
+    display: flex;
+    gap: 7px;
+}
+
+.btn {
+    border: none;
+    border-radius: 7px;
+    padding: 8px 11px;
+    font-size: 11px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.btn-approve {
+    background: #16a34a;
+    color: white;
+}
+
+.btn-approve:hover {
+    background: #15803d;
+}
+
+.btn-reject {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+.btn-reject:hover {
+    background: #fecaca;
+}
+
+.processed {
+    color: #9ca3af;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.message {
+    display: none;
+    margin-bottom: 18px;
+    padding: 12px 15px;
+    border-radius: 9px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.message.success {
+    display: block;
+    background: #f0fdf4;
+    color: #15803d;
+    border: 1px solid #bbf7d0;
+}
+
+.message.error {
+    display: block;
+    background: #fef2f2;
+    color: #b91c1c;
+    border: 1px solid #fecaca;
+}
+
+.empty {
+    text-align: center;
+    padding: 45px 20px;
+    color: #6b7280;
+}
+
+.notice {
+    margin-top: 25px;
+    background: #fff7ed;
+    border: 1px solid #fed7aa;
+    color: #9a3412;
+    border-radius: 12px;
+    padding: 15px 17px;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+footer {
+    text-align: center;
+    color: #9ca3af;
+    font-size: 12px;
+    padding: 28px 0 5px;
+}
+
+@media (max-width: 800px) {
+    .sidebar {
+        width: 190px;
+    }
+
+    .main {
+        padding: 24px 18px;
+    }
+
+    header {
+        padding: 0 18px;
+    }
+}
+
+@media (max-width: 600px) {
+    .layout {
+        display: block;
+    }
+
+    .sidebar {
+        width: 100%;
+    }
+}
+</style>
+
+</head>
+
+<body>
+
+<header>
+    <div class="brand">
+        <div class="logo-icon">$</div>
+        <span>DollarVault</span>
+    </div>
+
+```
+<div class="admin-badge">ADMIN PANEL</div>
+```
+
+</header>
+
+<div class="layout">
+
+```
+<aside class="sidebar">
+
+    <div class="sidebar-title">ADMIN MENU</div>
+
+    <a href="admin-dashboard.html">Dashboard</a>
+    <a href="admin-customers.html">Customers</a>
+    <a href="admin-deposits.html">Deposits</a>
+    <a href="admin-withdrawals.html" class="active">Withdrawals</a>
+    <a href="admin-rewards.html">Rewards</a>
+    <a href="admin-wallets.html">Wallets</a>
+    <a href="admin-settings.html">Settings</a>
+    <a href="login.html" onclick="logoutAdmin()">Logout</a>
+
+</aside>
+
+<main class="main">
+
+    <a href="admin-dashboard.html" class="back-link">
+        ← Back to Dashboard
+    </a>
+
+    <div class="page-heading">
+        <h1>Withdrawals</h1>
+        <p>Review and manage simulated customer withdrawal requests.</p>
+    </div>
+
+    <div id="message" class="message"></div>
+
+    <div class="table-card">
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>TRANSACTION ID</th>
+                        <th>CUSTOMER</th>
+                        <th>EMAIL</th>
+                        <th>AMOUNT</th>
+                        <th>WALLET ADDRESS</th>
+                        <th>DATE</th>
+                        <th>STATUS</th>
+                        <th>ACTION</th>
+                    </tr>
+                </thead>
+
+                <tbody id="withdrawalsBody">
+                    <tr>
+                        <td colspan="8" class="empty">
+                            Loading withdrawals...
+                        </td>
+                    </tr>
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+    <div class="notice">
+        <strong>Simulated Platform:</strong>
+        These withdrawal records are for website testing only.
+        No real cryptocurrency or money is transferred.
+    </div>
+
+    <footer>
+        © 2026 DollarVault · Administrator Panel
+    </footer>
+
+</main>
+```
+
+</div>
+
+<script>
+
+const API_URL = "http://localhost:3000";
+
+const withdrawalsBody = document.getElementById("withdrawalsBody");
+const messageBox = document.getElementById("message");
+
+
+function showMessage(text, type) {
+
+    messageBox.textContent = text;
+    messageBox.className = "message " + type;
+
+    setTimeout(() => {
+        messageBox.className = "message";
+        messageBox.textContent = "";
+    }, 4000);
+}
+
+
+function escapeHtml(value) {
+
+    if (value === null || value === undefined) {
+        return "";
+    }
+
+    return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+
+function formatDate(value) {
+
+    if (!value) {
+        return "-";
+    }
+
+    const date = new Date(value);
+
+    if (Number.isNaN(date.getTime())) {
+        return escapeHtml(value);
+    }
+
+    return date.toLocaleString();
+}
+
+
+function statusClass(status) {
+
+    const value = String(status || "").toLowerCase();
+
+    if (value === "completed") {
+        return "completed";
+    }
+
+    if (value === "rejected") {
+        return "rejected";
+    }
+
+    return "pending";
+}
+
+
+async function loadWithdrawals() {
+
+    withdrawalsBody.innerHTML = `
+        <tr>
+            <td colspan="8" class="empty">
+                Loading withdrawals...
+            </td>
+        </tr>
+    `;
+
+    try {
+
+        const response = await fetch(API_URL + "/api/admin/withdrawals");
+
+        if (!response.ok) {
+            throw new Error("Server returned an error.");
+        }
+
+        const data = await response.json();
+
+        const withdrawals = Array.isArray(data)
+            ? data
+            : (data.withdrawals || []);
+
+        if (!withdrawals.length) {
+
+            withdrawalsBody.innerHTML = `
+                <tr>
+                    <td colspan="8" class="empty">
+                        No withdrawal requests found.
+                    </td>
+                </tr>
+            `;
+
+            return;
+        }
+
+        withdrawalsBody.innerHTML = withdrawals.map(withdrawal => {
+
+            const id = withdrawal.id || "-";
+
+            const customerName =
+                withdrawal.customerName ||
+                withdrawal.name ||
+                "Unknown Customer";
+
+            const customerEmail =
+                withdrawal.customerEmail ||
+                withdrawal.email ||
+                "-";
+
+            const amount =
+                withdrawal.amount !== undefined
+                    ? withdrawal.amount
+                    : 0;
+
+            const walletAddress =
+                withdrawal.walletAddress ||
+                withdrawal.wallet ||
+                "-";
+
+            const date =
+                withdrawal.createdAt ||
+                withdrawal.date ||
+                null;
+
+            const status =
+                withdrawal.status ||
+                "Pending";
+
+            const normalizedStatus =
+                String(status).toLowerCase();
+
+            let actionHtml = "";
+
+            if (normalizedStatus === "pending") {
+
+                actionHtml = `
+                    <div class="actions">
+
+                        <button
+                            class="btn btn-approve"
+                            onclick="approveWithdrawal('${escapeHtml(id)}', this)">
+                            Approve
+                        </button>
+
+                        <button
+                            class="btn btn-reject"
+                            onclick="rejectWithdrawal('${escapeHtml(id)}', this)">
+                            Reject
+                        </button>
+
+                    </div>
+                `;
+
+            } else {
+
+                actionHtml = `
+                    <span class="processed">
+                        Processed
+                    </span>
+                `;
+            }
+
+            return `
+                <tr>
+
+                    <td>
+                        <span class="txn-id">
+                            ${escapeHtml(id)}
+                        </span>
+                    </td>
+
+                    <td>
+                        ${escapeHtml(customerName)}
+                    </td>
+
+                    <td>
+                        ${escapeHtml(customerEmail)}
+                    </td>
+
+                    <td>
+                        <span class="amount">
+                            ${escapeHtml(amount)} USDT
+                        </span>
+                    </td>
+
+                    <td>
+                        <span class="wallet">
+                            ${escapeHtml(walletAddress)}
+                        </span>
+                    </td>
+
+                    <td>
+                        ${formatDate(date)}
+                    </td>
+
+                    <td>
+                        <span class="status ${statusClass(status)}">
+                            ${escapeHtml(status)}
+                        </span>
+                    </td>
+
+                    <td>
+                        ${actionHtml}
+                    </td>
+
+                </tr>
+            `;
+
+        }).join("");
+
+    } catch (error) {
+
+        console.error(error);
+
+        withdrawalsBody.innerHTML = `
+            <tr>
+                <td colspan="8" class="empty">
+                    Unable to connect to the DollarVault server.
+                </td>
+            </tr>
+        `;
+
+        showMessage(
+            "Unable to connect to the DollarVault server.",
+            "error"
+        );
+    }
+}
+
+
+async function approveWithdrawal(id, button) {
+
+    if (!confirm("Approve this withdrawal request?")) {
+        return;
+    }
+
+    button.disabled = true;
+
+    try {
+
+        const response = await fetch(
+            API_URL + "/api/admin/withdrawals/" +
+            encodeURIComponent(id) +
+            "/approve",
+            {
+                method: "POST"
+            }
+        );
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(
+                data.message || "Unable to approve withdrawal."
+            );
+        }
+
+        showMessage(
+            data.message || "Withdrawal approved successfully.",
+            "success"
+        );
+
+        await loadWithdrawals();
+
+    } catch (error) {
+
+        console.error(error);
+
+        button.disabled = false;
+
+        showMessage(
+            error.message || "Unable to approve withdrawal.",
+            "error"
+        );
+    }
+}
+
+
+async function rejectWithdrawal(id, button) {
+
+    if (!confirm("Reject this withdrawal request?")) {
+        return;
+    }
+
+    button.disabled = true;
+
+    try {
+
+        const response = await fetch(
+            API_URL + "/api/admin/withdrawals/" +
+            encodeURIComponent(id) +
+            "/reject",
+            {
+                method: "POST"
+            }
+        );
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(
+                data.message || "Unable to reject withdrawal."
+            );
+        }
+
+        showMessage(
+            data.message || "Withdrawal rejected successfully.",
+            "success"
+        );
+
+        await loadWithdrawals();
+
+    } catch (error) {
+
+        console.error(error);
+
+        button.disabled = false;
+
+        showMessage(
+            error.message || "Unable to reject withdrawal.",
+            "error"
+        );
+    }
+}
+
+
+function logoutAdmin() {
+
+    localStorage.removeItem("dollarVaultAdmin");
+    localStorage.removeItem("dollarVaultAdminEmail");
+}
+
+
+loadWithdrawals();
+
+</script>
+
+</body>
+</html>

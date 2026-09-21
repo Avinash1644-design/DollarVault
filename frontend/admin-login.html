@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head> <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+       <title>DollarVault - Admin Login</title> 
+</html>
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+        background: #f4f7fb;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+    }
+
+    .login-card {
+        width: 100%;
+        max-width: 420px;
+        background: #ffffff;
+        border: 1px solid #e5e7eb;
+        border-radius: 18px;
+        padding: 38px 32px;
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+    }
+
+    .logo {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .logo-icon {
+        width: 60px;
+        height: 60px;
+        margin: 0 auto 14px;
+        border-radius: 50%;
+        background: #000000;
+        color: #ffffff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 32px;
+        font-weight: bold;
+    }
+
+    .logo h1 {
+        margin: 0;
+        font-size: 28px;
+        color: #111827;
+    }
+
+    .logo h1 span {
+        color: #16a34a;
+    }
+
+    .logo p {
+        margin: 8px 0 0;
+        color: #6b7280;
+        font-size: 14px;
+    }
+
+    .admin-badge {
+        display: inline-block;
+        margin-top: 12px;
+        padding: 6px 12px;
+        border-radius: 20px;
+        background: #f3f4f6;
+        color: #374151;
+        font-size: 12px;
+        font-weight: 600;
+    }
+
+    .form-group {
+        margin-bottom: 18px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 8px;
+        color: #374151;
+        font-size: 14px;
+        font-weight: 600;
+    }
+
+    input {
+        width: 100%;
+        padding: 13px 14px;
+        border: 1px solid #d1d5db;
+        border-radius: 10px;
+        font-size: 15px;
+        outline: none;
+    }
+
+    input:focus {
+        border-color: #16a34a;
+        box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.1);
+    }
+
+    button {
+        width: 100%;
+        padding: 14px;
+        border: none;
+        border-radius: 10px;
+        background: #111827;
+        color: #ffffff;
+        font-size: 15px;
+        font-weight: 600;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background: #000000;
+    }
+
+    button:disabled {
+        opacity: 0.7;
+        cursor: not-allowed;
+    }
+
+    .message {
+        min-height: 22px;
+        margin-top: 16px;
+        text-align: center;
+        font-size: 14px;
+        font-weight: 600;
+    }
+
+    .success {
+        color: #16a34a;
+    }
+
+    .error {
+        color: #dc2626;
+    }
+
+    .notice {
+        margin-top: 24px;
+        padding: 14px;
+        border-radius: 10px;
+        background: #f9fafb;
+        border: 1px solid #e5e7eb;
+        color: #6b7280;
+        font-size: 12px;
+        line-height: 1.5;
+        text-align: center;
+    }
+
+    .back-link {
+        display: block;
+        margin-top: 20px;
+        text-align: center;
+        color: #6b7280;
+        text-decoration: none;
+        font-size: 13px;
+    }
+
+    .back-link:hover {
+        color: #111827;
+    }
+
+    @media (max-width: 480px) {
+        .login-card {
+            padding: 30px 22px;
+        }
+    }
+</style>
+</head> <body>
+    <div class="login-card">
+
+    <div class="logo">
+
+        <div class="logo-icon">$</div>
+
+        <h1>
+            <span>Dollar</span>Vault
+        </h1>
+
+        <p>Secure Digital Wallet</p>
+
+        <div class="admin-badge">
+            Administrator Portal
+        </div>
+
+    </div>
+
+    <form id="adminLoginForm">
+
+        <div class="form-group">
+
+            <label for="email">
+                Admin Email
+            </label>
+
+            <input
+                type="email"
+                id="email"
+                placeholder="Enter admin email"
+                required
+            >
+
+        </div>
+
+        <div class="form-group">
+
+            <label for="password">
+                Password
+            </label>
+
+            <input
+                type="password"
+                id="password"
+                placeholder="Enter admin password"
+                required
+            >
+
+        </div>
+
+        <button type="submit" id="loginButton">
+            Admin Login
+        </button>
+
+        <div id="message" class="message"></div>
+
+    </form>
+
+    <div class="notice">
+        Administrator access is for local DollarVault
+        project testing only. No real funds are processed.
+    </div>
+
+    <a href="login.html" class="back-link">
+        ← Back to Customer Login
+    </a>
+
+</div>
+
+<script>
+    const form = document.getElementById("adminLoginForm");
+    const message = document.getElementById("message");
+    const loginButton = document.getElementById("loginButton");
+
+    form.addEventListener("submit", async function(event) {
+
+        event.preventDefault();
+
+        const email =
+            document.getElementById("email").value.trim();
+
+        const password =
+            document.getElementById("password").value;
+
+        message.textContent = "";
+        message.className = "message";
+
+        loginButton.disabled = true;
+        loginButton.textContent = "Checking...";
+
+        try {
+
+            const response = await fetch(
+                "http://127.0.0.1:3000/api/admin/login",
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+
+                    body: JSON.stringify({
+                        email: email,
+                        password: password
+                    })
+                }
+            );
+
+            const data = await response.json();
+
+            if (!response.ok || !data.success) {
+
+                throw new Error(
+                    data.message ||
+                    "Invalid administrator credentials."
+                );
+
+            }
+
+            localStorage.setItem(
+                "dollarVaultAdmin",
+                "true"
+            );
+
+            localStorage.setItem(
+                "dollarVaultAdminEmail",
+                data.admin.email
+            );
+
+            message.textContent =
+                "Admin login successful!";
+
+            message.classList.add("success");
+
+            setTimeout(function() {
+
+                window.location.href =
+                    "admin-dashboard.html";
+
+            }, 700);
+
+        } catch (error) {
+
+            message.textContent =
+                error.message ||
+                "Unable to connect to the server.";
+
+            message.classList.add("error");
+
+            loginButton.disabled = false;
+            loginButton.textContent = "Admin Login";
+
+        }
+
+    });
+</script>

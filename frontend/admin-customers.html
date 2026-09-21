@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DollarVault - Customers</title>
+
+<style>
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+        background: #f4f7fb;
+        color: #111827;
+    }
+
+    .header {
+        height: 72px;
+        background: #ffffff;
+        border-bottom: 1px solid #e5e7eb;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 30px;
+    }
+
+    .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .logo-icon {
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        background: #000000;
+        color: #ffffff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .brand-name {
+        font-size: 24px;
+        font-weight: 700;
+    }
+
+    .dollar {
+        color: #16a34a;
+    }
+
+    .vault {
+        color: #111827;
+    }
+
+    .admin-badge {
+        background: #111827;
+        color: #ffffff;
+        padding: 7px 12px;
+        border-radius: 8px;
+        font-size: 11px;
+        font-weight: bold;
+        letter-spacing: 0.7px;
+    }
+
+    .layout {
+        display: flex;
+        min-height: calc(100vh - 72px);
+    }
+
+    .sidebar {
+        width: 240px;
+        background: #111827;
+        padding: 25px 15px;
+        flex-shrink: 0;
+    }
+
+    .sidebar-title {
+        color: #9ca3af;
+        font-size: 11px;
+        font-weight: bold;
+        letter-spacing: 1px;
+        margin: 0 12px 15px;
+    }
+
+    .nav-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        text-decoration: none;
+        color: #d1d5db;
+        padding: 13px 14px;
+        border-radius: 9px;
+        margin-bottom: 5px;
+        font-size: 14px;
+        transition: 0.2s;
+    }
+
+    .nav-item:hover {
+        background: #1f2937;
+        color: #ffffff;
+    }
+
+    .nav-item.active {
+        background: #16a34a;
+        color: #ffffff;
+        font-weight: bold;
+    }
+
+    .nav-icon {
+        width: 22px;
+        text-align: center;
+    }
+
+    .logout {
+        margin-top: 30px;
+        border-top: 1px solid #374151;
+        padding-top: 20px;
+    }
+
+    .main {
+        flex: 1;
+        padding: 30px;
+        min-width: 0;
+    }
+
+    .page-heading {
+        margin-bottom: 25px;
+    }
+
+    .page-heading h1 {
+        font-size: 28px;
+        margin-bottom: 7px;
+    }
+
+    .page-heading p {
+        color: #6b7280;
+        font-size: 14px;
+    }
+
+    .panel {
+        background: #ffffff;
+        border: 1px solid #e5e7eb;
+        border-radius: 14px;
+        box-shadow: 0 3px 12px rgba(0, 0, 0, 0.04);
+        overflow: hidden;
+    }
+
+    .panel-header {
+        padding: 20px 22px;
+        border-bottom: 1px solid #e5e7eb;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .panel-header h2 {
+        font-size: 18px;
+    }
+
+    .customer-count {
+        color: #6b7280;
+        font-size: 13px;
+    }
+
+    .table-container {
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 650px;
+    }
+
+    th {
+        background: #f9fafb;
+        color: #6b7280;
+        font-size: 12px;
+        text-align: left;
+        padding: 15px 20px;
+        border-bottom: 1px solid #e5e7eb;
+        text-transform: uppercase;
+        letter-spacing: 0.4px;
+    }
+
+    td {
+        padding: 17px 20px;
+        border-bottom: 1px solid #f0f0f0;
+        font-size: 14px;
+    }
+
+    tr:last-child td {
+        border-bottom: none;
+    }
+
+    .customer-name {
+        font-weight: 600;
+        color: #111827;
+    }
+
+    .customer-email {
+        color: #6b7280;
+    }
+
+    .account-badge {
+        display: inline-block;
+        background: #dcfce7;
+        color: #166534;
+        padding: 5px 9px;
+        border-radius: 6px;
+        font-size: 11px;
+        font-weight: bold;
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 60px 20px;
+        color: #6b7280;
+    }
+
+    .empty-icon {
+        font-size: 38px;
+        margin-bottom: 12px;
+    }
+
+    .empty-state h3 {
+        color: #374151;
+        margin-bottom: 7px;
+    }
+
+    .notice {
+        margin-top: 20px;
+        background: #fff7ed;
+        border: 1px solid #fed7aa;
+        color: #9a3412;
+        border-radius: 12px;
+        padding: 15px 17px;
+        font-size: 13px;
+        line-height: 1.6;
+    }
+
+    .notice strong {
+        display: block;
+        margin-bottom: 3px;
+    }
+
+    .footer {
+        text-align: center;
+        color: #9ca3af;
+        font-size: 12px;
+        padding: 25px 0 5px;
+    }
+
+    .error-message {
+        display: none;
+        margin-bottom: 20px;
+        background: #fef2f2;
+        border: 1px solid #fecaca;
+        color: #b91c1c;
+        padding: 13px 15px;
+        border-radius: 9px;
+        font-size: 13px;
+    }
+
+    @media (max-width: 750px) {
+        .header {
+            padding: 0 15px;
+        }
+
+        .brand-name {
+            font-size: 20px;
+        }
+
+        .admin-badge {
+            display: none;
+        }
+
+        .sidebar {
+            width: 70px;
+            padding: 20px 8px;
+        }
+
+        .sidebar-title {
+            display: none;
+        }
+
+        .nav-item {
+            justify-content: center;
+            padding: 13px 5px;
+        }
+
+        .nav-text {
+            display: none;
+        }
+
+        .main {
+            padding: 20px 15px;
+        }
+
+        .page-heading h1 {
+            font-size: 24px;
+        }
+    }
+</style>
+
+</head>
+
+<body>
+
+<header class="header">
+
+```
+<div class="brand">
+    <div class="logo-icon">$</div>
+
+    <div class="brand-name">
+        <span class="dollar">Dollar</span><span class="vault">Vault</span>
+    </div>
+</div>
+
+<div class="admin-badge">
+    ADMIN PANEL
+</div>
+```
+
+</header>
+
+<div class="layout">
+
+```
+<aside class="sidebar">
+
+    <div class="sidebar-title">
+        ADMINISTRATION
+    </div>
+
+    <a href="admin-dashboard.html" class="nav-item">
+        <span class="nav-icon">⌂</span>
+        <span class="nav-text">Dashboard</span>
+    </a>
+
+    <a href="admin-customers.html" class="nav-item active">
+        <span class="nav-icon">👥</span>
+        <span class="nav-text">Customers</span>
+    </a>
+
+    <a href="admin-deposits.html" class="nav-item">
+        <span class="nav-icon">↓</span>
+        <span class="nav-text">Deposits</span>
+    </a>
+
+    <a href="admin-withdrawals.html" class="nav-item">
+        <span class="nav-icon">↑</span>
+        <span class="nav-text">Withdrawals</span>
+    </a>
+
+    <a href="admin-rewards.html" class="nav-item">
+        <span class="nav-icon">★</span>
+        <span class="nav-text">Rewards</span>
+    </a>
+
+    <a href="admin-wallets.html" class="nav-item">
+        <span class="nav-icon">◈</span>
+        <span class="nav-text">Wallets</span>
+    </a>
+
+    <a href="admin-settings.html" class="nav-item">
+        <span class="nav-icon">⚙</span>
+        <span class="nav-text">Settings</span>
+    </a>
+
+    <div class="logout">
+
+        <a href="#" class="nav-item" onclick="logoutAdmin(); return false;">
+            <span class="nav-icon">↪</span>
+            <span class="nav-text">Logout</span>
+        </a>
+
+    </div>
+
+</aside>
+
+<main class="main">
+
+    <div class="page-heading">
+        <h1>Customers</h1>
+        <p>View registered DollarVault customer accounts.</p>
+    </div>
+
+    <div class="error-message" id="errorMessage">
+        Unable to load customer information.
+    </div>
+
+    <section class="panel">
+
+        <div class="panel-header">
+            <h2>Customer Accounts</h2>
+
+            <span class="customer-count" id="customerCount">
+                0 customers
+            </span>
+        </div>
+
+        <div class="table-container">
+
+            <table id="customersTable">
+
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Customer</th>
+                        <th>Email Address</th>
+                        <th>Account Type</th>
+                    </tr>
+                </thead>
+
+                <tbody id="customersBody">
+                </tbody>
+
+            </table>
+
+            <div class="empty-state" id="emptyState" style="display: none;">
+
+                <div class="empty-icon">👥</div>
+
+                <h3>No customers found</h3>
+
+                <p>Registered customer accounts will appear here.</p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <div class="notice">
+        <strong>⚠ Simulated Administration</strong>
+        Customer information shown here is part of the DollarVault testing environment. This project currently uses demo data and does not process real financial transactions.
+    </div>
+
+    <div class="footer">
+        © 2026 DollarVault · Administrator Panel
+    </div>
+
+</main>
+```
+
+</div>
+
+<script>
+
+    const adminLoggedIn =
+        localStorage.getItem("dollarVaultAdmin");
+
+    if (adminLoggedIn !== "true") {
+        window.location.href = "admin-login.html";
+    }
+
+    async function loadCustomers() {
+
+        const customersBody =
+            document.getElementById("customersBody");
+
+        const emptyState =
+            document.getElementById("emptyState");
+
+        const customersTable =
+            document.getElementById("customersTable");
+
+        const customerCount =
+            document.getElementById("customerCount");
+
+        const errorMessage =
+            document.getElementById("errorMessage");
+
+        try {
+
+            const response = await fetch(
+                "http://127.0.0.1:3000/api/admin/customers"
+            );
+
+            if (!response.ok) {
+                throw new Error("Customer request failed.");
+            }
+
+            const customers = await response.json();
+
+            if (!Array.isArray(customers)) {
+                throw new Error("Invalid customer data received.");
+            }
+
+            customerCount.textContent =
+                customers.length +
+                (customers.length === 1 ? " customer" : " customers");
+
+            customersBody.innerHTML = "";
+
+            if (customers.length === 0) {
+
+                customersTable.style.display = "none";
+                emptyState.style.display = "block";
+
+                return;
+            }
+
+            customersTable.style.display = "table";
+            emptyState.style.display = "none";
+
+            customers.forEach(function(customer, index) {
+
+                const row =
+                    document.createElement("tr");
+
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+
+                    <td>
+                        <div class="customer-name">
+                            ${escapeHtml(customer.name || customer.fullName || "—")}
+                        </div>
+                    </td>
+
+                    <td>
+                        <div class="customer-email">
+                            ${escapeHtml(customer.email || "—")}
+                        </div>
+                    </td>
+
+                    <td>
+                        <span class="account-badge">
+                            ${escapeHtml(customer.accountType || "Customer")}
+                        </span>
+                    </td>
+                `;
+
+                customersBody.appendChild(row);
+
+            });
+
+        } catch (error) {
+
+            console.error(
+                "Unable to load customers:",
+                error
+            );
+
+            errorMessage.style.display = "block";
+
+            customersTable.style.display = "none";
+            emptyState.style.display = "none";
+        }
+    }
+
+    function escapeHtml(value) {
+
+        const div =
+            document.createElement("div");
+
+        div.textContent =
+            value || "";
+
+        return div.innerHTML;
+    }
+
+    function logoutAdmin() {
+
+        localStorage.removeItem("dollarVaultAdmin");
+        localStorage.removeItem("dollarVaultAdminEmail");
+
+        window.location.href = "admin-login.html";
+    }
+
+    loadCustomers();
+
+</script>
+
+</body>
+</html>

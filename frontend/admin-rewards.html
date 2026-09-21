@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DollarVault - Admin Rewards</title>
+
+```
+<style>
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+        background: #f4f7fb;
+        color: #111827;
+    }
+
+    .header {
+        height: 72px;
+        background: #ffffff;
+        border-bottom: 1px solid #e5e7eb;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 30px;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+    }
+
+    .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .logo-icon {
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        background: #000000;
+        color: #ffffff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .brand-name {
+        font-size: 24px;
+        font-weight: 700;
+    }
+
+    .brand-name .dollar {
+        color: #16a34a;
+    }
+
+    .brand-name .vault {
+        color: #111827;
+    }
+
+    .admin-badge {
+        background: #111827;
+        color: #ffffff;
+        padding: 7px 12px;
+        border-radius: 8px;
+        font-size: 11px;
+        font-weight: bold;
+        letter-spacing: 0.7px;
+    }
+
+    .layout {
+        display: flex;
+        min-height: calc(100vh - 72px);
+    }
+
+    .sidebar {
+        width: 240px;
+        background: #111827;
+        color: #ffffff;
+        padding: 25px 15px;
+        flex-shrink: 0;
+    }
+
+    .sidebar-title {
+        color: #9ca3af;
+        font-size: 11px;
+        font-weight: bold;
+        letter-spacing: 1px;
+        margin: 0 12px 15px;
+    }
+
+    .nav-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        text-decoration: none;
+        color: #d1d5db;
+        padding: 13px 14px;
+        border-radius: 9px;
+        margin-bottom: 5px;
+        font-size: 14px;
+        transition: 0.2s;
+    }
+
+    .nav-item:hover {
+        background: #1f2937;
+        color: #ffffff;
+    }
+
+    .nav-item.active {
+        background: #16a34a;
+        color: #ffffff;
+        font-weight: bold;
+    }
+
+    .nav-icon {
+        width: 22px;
+        text-align: center;
+        font-size: 16px;
+    }
+
+    .logout {
+        margin-top: 30px;
+        border-top: 1px solid #374151;
+        padding-top: 20px;
+    }
+
+    .main {
+        flex: 1;
+        padding: 30px;
+        min-width: 0;
+    }
+
+    .page-heading {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 20px;
+        margin-bottom: 25px;
+    }
+
+    .page-heading h1 {
+        font-size: 28px;
+        margin-bottom: 7px;
+    }
+
+    .page-heading p {
+        color: #6b7280;
+        font-size: 14px;
+    }
+
+    .admin-email {
+        background: #ffffff;
+        border: 1px solid #e5e7eb;
+        padding: 10px 14px;
+        border-radius: 9px;
+        font-size: 13px;
+        color: #4b5563;
+    }
+
+    .content-grid {
+        display: grid;
+        grid-template-columns: 1.2fr 1fr;
+        gap: 20px;
+        margin-bottom: 20px;
+    }
+
+    .panel {
+        background: #ffffff;
+        border: 1px solid #e5e7eb;
+        border-radius: 14px;
+        padding: 22px;
+        box-shadow: 0 3px 12px rgba(0, 0, 0, 0.04);
+    }
+
+    .panel-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 20px;
+    }
+
+    .panel-header h2 {
+        font-size: 18px;
+    }
+
+    .panel-header span {
+        color: #6b7280;
+        font-size: 12px;
+    }
+
+    .setting-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+        padding: 16px 0;
+        border-bottom: 1px solid #f0f0f0;
+    }
+
+    .setting-row:last-child {
+        border-bottom: none;
+    }
+
+    .setting-info strong {
+        display: block;
+        font-size: 14px;
+        margin-bottom: 5px;
+    }
+
+    .setting-info small {
+        color: #6b7280;
+        font-size: 12px;
+    }
+
+    .input-box {
+        width: 120px;
+        padding: 10px 12px;
+        border: 1px solid #d1d5db;
+        border-radius: 8px;
+        font-size: 14px;
+        text-align: right;
+        outline: none;
+    }
+
+    .input-box:focus {
+        border-color: #16a34a;
+    }
+
+    .toggle {
+        position: relative;
+        width: 48px;
+        height: 26px;
+    }
+
+    .toggle input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+
+    .slider {
+        position: absolute;
+        inset: 0;
+        background: #d1d5db;
+        border-radius: 30px;
+        cursor: pointer;
+        transition: 0.2s;
+    }
+
+    .slider:before {
+        content: "";
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        left: 3px;
+        top: 3px;
+        background: #ffffff;
+        border-radius: 50%;
+        transition: 0.2s;
+    }
+
+    .toggle input:checked + .slider {
+        background: #16a34a;
+    }
+
+    .toggle input:checked + .slider:before {
+        transform: translateX(22px);
+    }
+
+    .save-button {
+        margin-top: 20px;
+        width: 100%;
+        border: none;
+        background: #16a34a;
+        color: #ffffff;
+        padding: 13px;
+        border-radius: 9px;
+        font-size: 14px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .save-button:hover {
+        background: #15803d;
+    }
+
+    .reward-card {
+        border: 1px solid #e5e7eb;
+        border-radius: 11px;
+        padding: 18px;
+        margin-bottom: 12px;
+    }
+
+    .reward-card:last-child {
+        margin-bottom: 0;
+    }
+
+    .reward-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 8px;
+    }
+
+    .reward-top strong {
+        font-size: 15px;
+    }
+
+    .reward-rate {
+        color: #16a34a;
+        font-weight: bold;
+    }
+
+    .reward-card p {
+        color: #6b7280;
+        font-size: 12px;
+        line-height: 1.5;
+    }
+
+    .notice {
+        background: #fff7ed;
+        border: 1px solid #fed7aa;
+        color: #9a3412;
+        border-radius: 12px;
+        padding: 15px 17px;
+        font-size: 13px;
+        line-height: 1.6;
+        margin-top: 20px;
+    }
+
+    .notice strong {
+        display: block;
+        margin-bottom: 3px;
+    }
+
+    .footer {
+        text-align: center;
+        color: #9ca3af;
+        font-size: 12px;
+        padding: 25px 0 5px;
+    }
+
+    @media (max-width: 900px) {
+        .content-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    @media (max-width: 750px) {
+        .header {
+            padding: 0 15px;
+        }
+
+        .brand-name {
+            font-size: 20px;
+        }
+
+        .admin-badge {
+            display: none;
+        }
+
+        .sidebar {
+            width: 70px;
+            padding: 20px 8px;
+        }
+
+        .sidebar-title {
+            display: none;
+        }
+
+        .nav-item {
+            justify-content: center;
+            padding: 13px 5px;
+        }
+
+        .nav-text {
+            display: none;
+        }
+
+        .main {
+            padding: 20px 15px;
+        }
+
+        .page-heading {
+            flex-direction: column;
+        }
+
+        .admin-email {
+            width: 100%;
+        }
+
+        .setting-row {
+            align-items: flex-start;
+        }
+    }
+</style>
+```
+
+</head>
+
+<body>
+
+<header class="header">
+
+```
+<div class="brand">
+
+    <div class="logo-icon">
+        $
+    </div>
+
+    <div class="brand-name">
+        <span class="dollar">Dollar</span><span class="vault">Vault</span>
+    </div>
+
+</div>
+
+<div class="admin-badge">
+    ADMIN PANEL
+</div>
+```
+
+</header>
+
+<div class="layout">
+
+```
+<aside class="sidebar">
+
+    <div class="sidebar-title">
+        ADMINISTRATION
+    </div>
+
+    <a href="admin-dashboard.html" class="nav-item">
+
+        <span class="nav-icon">⌂</span>
+
+        <span class="nav-text">
+            Dashboard
+        </span>
+
+    </a>
+
+    <a href="admin-customers.html" class="nav-item">
+
+        <span class="nav-icon">👥</span>
+
+        <span class="nav-text">
+            Customers
+        </span>
+
+    </a>
+
+    <a href="admin-deposits.html" class="nav-item">
+
+        <span class="nav-icon">↓</span>
+
+        <span class="nav-text">
+            Deposits
+        </span>
+
+    </a>
+
+    <a href="admin-withdrawals.html" class="nav-item">
+
+        <span class="nav-icon">↑</span>
+
+        <span class="nav-text">
+            Withdrawals
+        </span>
+
+    </a>
+
+    <a href="admin-rewards.html" class="nav-item active">
+
+        <span class="nav-icon">★</span>
+
+        <span class="nav-text">
+            Rewards
+        </span>
+
+    </a>
+
+    <a href="admin-wallets.html" class="nav-item">
+
+        <span class="nav-icon">◈</span>
+
+        <span class="nav-text">
+            Wallets
+        </span>
+
+    </a>
+
+    <a href="#" class="nav-item" onclick="showNotReady('Settings'); return false;">
+
+        <span class="nav-icon">⚙</span>
+
+        <span class="nav-text">
+            Settings
+        </span>
+
+    </a>
+
+    <div class="logout">
+
+        <a href="#" class="nav-item" onclick="logoutAdmin(); return false;">
+
+            <span class="nav-icon">↪</span>
+
+            <span class="nav-text">
+                Logout
+            </span>
+
+        </a>
+
+    </div>
+
+</aside>
+
+
+<main class="main">
+
+    <div class="page-heading">
+
+        <div>
+
+            <h1>
+                Reward Settings
+            </h1>
+
+            <p>
+                Configure the reward rules for the DollarVault platform.
+            </p>
+
+        </div>
+
+        <div class="admin-email" id="adminEmail">
+            Administrator
+        </div>
+
+    </div>
+
+
+    <section class="content-grid">
+
+        <div class="panel">
+
+            <div class="panel-header">
+
+                <h2>
+                    Reward Configuration
+                </h2>
+
+                <span>
+                    Settings
+                </span>
+
+            </div>
+
+
+            <div class="setting-row">
+
+                <div class="setting-info">
+
+                    <strong>
+                        Rewards Enabled
+                    </strong>
+
+                    <small>
+                        Enable or disable simulated rewards.
+                    </small>
+
+                </div>
+
+                <label class="toggle">
+
+                    <input
+                        type="checkbox"
+                        id="rewardsEnabled"
+                        checked
+                    >
+
+                    <span class="slider"></span>
+
+                </label>
+
+            </div>
+
+
+            <div class="setting-row">
+
+                <div class="setting-info">
+
+                    <strong>
+                        Reward Rate
+                    </strong>
+
+                    <small>
+                        Percentage used for the simulated reward calculation.
+                    </small>
+
+                </div>
+
+                <input
+                    class="input-box"
+                    type="number"
+                    id="rewardRate"
+                    value="3"
+                    min="0"
+                    max="100"
+                    step="0.1"
+                >
+
+            </div>
+
+
+            <div class="setting-row">
+
+                <div class="setting-info">
+
+                    <strong>
+                        Minimum Balance
+                    </strong>
+
+                    <small>
+                        Minimum simulated balance required for rewards.
+                    </small>
+
+                </div>
+
+                <input
+                    class="input-box"
+                    type="number"
+                    id="minimumBalance"
+                    value="100"
+                    min="0"
+                    step="1"
+                >
+
+            </div>
+
+
+            <button
+                class="save-button"
+                onclick="saveRewardSettings()"
+            >
+                Save Reward Settings
+            </button>
+
+        </div>
+
+
+        <div class="panel">
+
+            <div class="panel-header">
+
+                <h2>
+                    Reward Overview
+                </h2>
+
+                <span>
+                    Current
+                </span>
+
+            </div>
+
+
+            <div class="reward-card">
+
+                <div class="reward-top">
+
+                    <strong>
+                        Standard Reward
+                    </strong>
+
+                    <span
+                        class="reward-rate"
+                        id="overviewRate"
+                    >
+                        3%
+                    </span>
+
+                </div>
+
+                <p>
+                    Simulated reward rate currently configured for eligible customer balances.
+                </p>
+
+            </div>
+
+
+            <div class="reward-card">
+
+                <div class="reward-top">
+
+                    <strong>
+                        Minimum Balance
+                    </strong>
+
+                    <span
+                        class="reward-rate"
+                        id="overviewMinimum"
+                    >
+                        100 USDT
+                    </span>
+
+                </div>
+
+                <p>
+                    Customers must meet the configured minimum balance before simulated rewards apply.
+                </p>
+
+            </div>
+
+
+            <div class="reward-card">
+
+                <div class="reward-top">
+
+                    <strong>
+                        Reward Status
+                    </strong>
+
+                    <span
+                        class="reward-rate"
+                        id="overviewStatus"
+                    >
+                        Enabled
+                    </span>
+
+                </div>
+
+                <p>
+                    Reward calculations are simulated and intended only for project testing.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <div class="notice">
+
+        <strong>
+            ⚠ Simulated Rewards
+        </strong>
+
+        Reward values shown by DollarVault are simulated for this practical project.
+        They are not real investment returns and no real money is distributed.
+
+    </div>
+
+
+    <div class="footer">
+        © 2026 DollarVault · Administrator Panel
+    </div>
+
+</main>
+```
+
+</div>
+
+<script>
+
+    const adminLoggedIn =
+        localStorage.getItem("dollarVaultAdmin");
+
+    if (adminLoggedIn !== "true") {
+
+        window.location.href =
+            "admin-login.html";
+
+    }
+
+
+    const adminEmail =
+        localStorage.getItem("dollarVaultAdminEmail");
+
+    if (adminEmail) {
+
+        document.getElementById("adminEmail").textContent =
+            adminEmail;
+
+    }
+
+
+    function saveRewardSettings() {
+
+        const enabled =
+            document.getElementById("rewardsEnabled").checked;
+
+        const rate =
+            Number(document.getElementById("rewardRate").value);
+
+        const minimum =
+            Number(document.getElementById("minimumBalance").value);
+
+        if (!Number.isFinite(rate) || rate < 0 || rate > 100) {
+
+            alert("Please enter a valid reward rate.");
+
+            return;
+
+        }
+
+        if (!Number.isFinite(minimum) || minimum < 0) {
+
+            alert("Please enter a valid minimum balance.");
+
+            return;
+
+        }
+
+
+        localStorage.setItem(
+            "dollarVaultRewardsEnabled",
+            enabled ? "true" : "false"
+        );
+
+        localStorage.setItem(
+            "dollarVaultRewardRate",
+            rate
+        );
+
+        localStorage.setItem(
+            "dollarVaultMinimumBalance",
+            minimum
+        );
+
+
+        document.getElementById("overviewRate").textContent =
+            rate + "%";
+
+        document.getElementById("overviewMinimum").textContent =
+            Number(minimum).toLocaleString() + " USDT";
+
+        document.getElementById("overviewStatus").textContent =
+            enabled ? "Enabled" : "Disabled";
+
+
+        alert("Reward settings saved successfully.");
+
+    }
+
+
+    function loadRewardSettings() {
+
+        const savedEnabled =
+            localStorage.getItem("dollarVaultRewardsEnabled");
+
+        const savedRate =
+            localStorage.getItem("dollarVaultRewardRate");
+
+        const savedMinimum =
+            localStorage.getItem("dollarVaultMinimumBalance");
+
+
+        if (savedEnabled !== null) {
+
+            document.getElementById("rewardsEnabled").checked =
+                savedEnabled === "true";
+
+        }
+
+        if (savedRate !== null) {
+
+            document.getElementById("rewardRate").value =
+                savedRate;
+
+        }
+
+        if (savedMinimum !== null) {
+
+            document.getElementById("minimumBalance").value =
+                savedMinimum;
+
+        }
+
+
+        document.getElementById("overviewRate").textContent =
+            document.getElementById("rewardRate").value + "%";
+
+        document.getElementById("overviewMinimum").textContent =
+            Number(
+                document.getElementById("minimumBalance").value
+            ).toLocaleString() + " USDT";
+
+        document.getElementById("overviewStatus").textContent =
+            document.getElementById("rewardsEnabled").checked
+                ? "Enabled"
+                : "Disabled";
+
+    }
+
+
+    function showNotReady(pageName) {
+
+        alert(
+            pageName +
+            " page is not created yet."
+        );
+
+    }
+
+
+    function logoutAdmin() {
+
+        localStorage.removeItem(
+            "dollarVaultAdmin"
+        );
+
+        localStorage.removeItem(
+            "dollarVaultAdminEmail"
+        );
+
+        window.location.href =
+            "admin-login.html";
+
+    }
+
+
+    loadRewardSettings();
+
+</script>
+
+</body>
+</html>
