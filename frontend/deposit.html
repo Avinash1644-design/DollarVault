@@ -205,88 +205,88 @@ button:disabled {
 
 <header>
 
-```
 <div class="brand">
 
-    <div class="logo">$</div>
+```
+<div class="logo">$</div>
 
-    <div class="brand-name">
-        <span class="brand-dollar">Dollar</span><span class="brand-vault">Vault</span>
-    </div>
+<div class="brand-name">
+    <span class="brand-dollar">Dollar</span><span class="brand-vault">Vault</span>
+</div>
+```
 
 </div>
 
 <a href="dashboard.html" class="back">
     ← Dashboard
 </a>
-```
 
 </header>
 
 <div class="container">
 
-```
 <div class="card">
 
-    <h1>Deposit</h1>
+```
+<h1>Deposit</h1>
 
-    <p class="subtitle">
-        Add simulated USDT to your DollarVault balance.
-    </p>
+<p class="subtitle">
+    Add simulated USDT to your DollarVault balance.
+</p>
 
-    <div id="message" class="message"></div>
+<div id="message" class="message"></div>
 
-    <form id="depositForm">
+<form id="depositForm">
 
-        <label for="amount">
-            Deposit Amount (USDT)
-        </label>
+    <label for="amount">
+        Deposit Amount (USDT)
+    </label>
 
-        <input
-            type="number"
-            id="amount"
-            min="1"
-            step="0.01"
-            placeholder="Enter amount"
-            required
-        >
+    <input
+        type="number"
+        id="amount"
+        min="1"
+        step="0.01"
+        placeholder="Enter amount"
+        required
+    >
 
-        <label for="walletAddress">
-            Platform Wallet Address
-        </label>
+    <label for="walletAddress">
+        Platform Wallet Address
+    </label>
 
-        <input
-            type="text"
-            id="walletAddress"
-            class="wallet-field"
-            value="0x40Cc04702D07D6bFf2A18A76DEC469b8b123bdD4"
-            readonly
-        >
+    <input
+        type="text"
+        id="walletAddress"
+        class="wallet-field"
+        value="0x40Cc04702D07D6bFf2A18A76DEC469b8b123bdD4"
+        readonly
+    >
 
-        <div class="wallet-note">
-            This platform wallet address is fixed and cannot be changed.
-        </div>
-
-        <button type="submit" id="depositButton">
-            Submit Deposit
-        </button>
-
-    </form>
-
-    <div class="notice">
-        <strong>Simulated Platform:</strong>
-        Deposits on this website are for testing only.
-        No real cryptocurrency or money is transferred.
+    <div class="wallet-note">
+        This platform wallet address is fixed and cannot be changed.
     </div>
 
+    <button type="submit" id="depositButton">
+        Submit Deposit
+    </button>
+
+</form>
+
+<div class="notice">
+    <strong>Simulated Platform:</strong>
+    Deposits on this website are for testing only.
+    No real cryptocurrency or money is transferred.
 </div>
 ```
+
+</div>
 
 </div>
 
 <script>
 
-const API_URL = "http://localhost:3000";
+const API_URL = "";
 
 const PLATFORM_WALLET =
     "0x40Cc04702D07D6bFf2A18A76DEC469b8b123bdD4";
