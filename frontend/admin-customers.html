@@ -486,9 +486,7 @@
 
         try {
 
-            const response = await fetch(
-                "http://127.0.0.1:3000/api/admin/customers"
-            );
+            const response = await fetch("/api/admin/customers");
 
             if (!response.ok) {
                 throw new Error("Customer request failed.");
