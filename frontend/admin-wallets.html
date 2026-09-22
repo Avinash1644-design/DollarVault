@@ -480,7 +480,7 @@
 
     </a>
 
-    <a href="#" class="nav-item" onclick="showNotReady('Rewards'); return false;">
+    <a href="admin-rewards.html" class="nav-item"></a>
 
         <span class="nav-icon">
             ★
@@ -718,10 +718,7 @@
 
         try {
 
-            const response =
-                await fetch(
-                    "http://127.0.0.1:3000/api/admin/stats"
-                );
+            const response = await fetch("/api/admin/stats");
 
             const data =
                 await response.json();
