@@ -1,336 +1,315 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Withdraw - DollarVault</title>
 
-```
-<style>
-    * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-        font-family: Arial, sans-serif;
-    }
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
 
-    body {
-        background: #f8fafc;
-        color: #111827;
-        min-height: 100vh;
-    }
+        body {
+            background: #f8fafc;
+            color: #111827;
+            min-height: 100vh;
+        }
 
-    header {
-        height: 72px;
-        background: #ffffff;
-        border-bottom: 1px solid #e5e7eb;
-        display: flex;
-        align-items: center;
-        padding: 0 40px;
-    }
-
-    .logo {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        font-size: 22px;
-        font-weight: 700;
-    }
-
-    .logo-icon {
-        width: 38px;
-        height: 38px;
-        background: #16a34a;
-        color: white;
-        border-radius: 10px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 22px;
-    }
-
-    .logo-dollar {
-        color: #16a34a;
-    }
-
-    .logo-vault {
-        color: #111827;
-    }
-
-    .back-link {
-        margin-left: auto;
-        text-decoration: none;
-        color: #374151;
-        font-size: 14px;
-        font-weight: 600;
-        padding: 10px 14px;
-        border-radius: 8px;
-    }
-
-    .back-link:hover {
-        background: #f3f4f6;
-        color: #111827;
-    }
-
-    .container {
-        max-width: 700px;
-        margin: 60px auto;
-        padding: 0 20px;
-    }
-
-    .card {
-        background: #ffffff;
-        border: 1px solid #e5e7eb;
-        border-radius: 16px;
-        padding: 35px;
-        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
-    }
-
-    h1 {
-        font-size: 30px;
-        margin-bottom: 10px;
-    }
-
-    .subtitle {
-        color: #6b7280;
-        margin-bottom: 30px;
-    }
-
-    .balance-box {
-        background: #f0fdf4;
-        border: 1px solid #bbf7d0;
-        border-radius: 12px;
-        padding: 20px;
-        margin-bottom: 30px;
-    }
-
-    .balance-label {
-        color: #166534;
-        font-size: 14px;
-        margin-bottom: 8px;
-    }
-
-    .balance {
-        font-size: 32px;
-        font-weight: 700;
-        color: #15803d;
-    }
-
-    label {
-        display: block;
-        font-size: 14px;
-        font-weight: 600;
-        margin-bottom: 8px;
-        color: #374151;
-    }
-
-    input {
-        width: 100%;
-        padding: 13px 14px;
-        border: 1px solid #d1d5db;
-        border-radius: 8px;
-        font-size: 15px;
-        margin-bottom: 20px;
-        outline: none;
-    }
-
-    input:focus {
-        border-color: #16a34a;
-    }
-
-    button {
-        width: 100%;
-        padding: 14px;
-        background: #16a34a;
-        color: white;
-        border: none;
-        border-radius: 8px;
-        font-size: 16px;
-        font-weight: 700;
-        cursor: pointer;
-    }
-
-    button:hover {
-        background: #15803d;
-    }
-
-    button:disabled {
-        background: #9ca3af;
-        cursor: not-allowed;
-    }
-
-    .message {
-        margin-top: 20px;
-        padding: 12px;
-        border-radius: 8px;
-        display: none;
-        font-size: 14px;
-    }
-
-    .success {
-        display: block;
-        background: #f0fdf4;
-        color: #166534;
-        border: 1px solid #bbf7d0;
-    }
-
-    .error {
-        display: block;
-        background: #fef2f2;
-        color: #991b1b;
-        border: 1px solid #fecaca;
-    }
-
-    .demo-notice {
-        margin-top: 25px;
-        padding: 12px 15px;
-        background: #fffbeb;
-        border: 1px solid #fde68a;
-        color: #92400e;
-        border-radius: 8px;
-        font-size: 13px;
-    }
-
-    @media (max-width: 600px) {
         header {
-            padding: 0 20px;
+            height: 72px;
+            background: #ffffff;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            align-items: center;
+            padding: 0 40px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .logo-icon {
+            width: 38px;
+            height: 38px;
+            background: #16a34a;
+            color: white;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+        }
+
+        .logo-dollar {
+            color: #16a34a;
+        }
+
+        .logo-vault {
+            color: #111827;
+        }
+
+        .back-link {
+            margin-left: auto;
+            text-decoration: none;
+            color: #374151;
+            font-size: 14px;
+            font-weight: 600;
+            padding: 10px 14px;
+            border-radius: 8px;
+        }
+
+        .back-link:hover {
+            background: #f3f4f6;
+            color: #111827;
         }
 
         .container {
-            margin: 30px auto;
+            max-width: 700px;
+            margin: 60px auto;
+            padding: 0 20px;
         }
 
         .card {
-            padding: 25px 20px;
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 16px;
+            padding: 35px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
         }
 
         h1 {
-            font-size: 25px;
+            font-size: 30px;
+            margin-bottom: 10px;
         }
-    }
-</style>
-```
 
+        .subtitle {
+            color: #6b7280;
+            margin-bottom: 30px;
+        }
+
+        .balance-box {
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .balance-label {
+            color: #166534;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .balance {
+            font-size: 32px;
+            font-weight: 700;
+            color: #15803d;
+        }
+
+        label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #374151;
+        }
+
+        input {
+            width: 100%;
+            padding: 13px 14px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 15px;
+            margin-bottom: 20px;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #16a34a;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            background: #16a34a;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #15803d;
+        }
+
+        button:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+        }
+
+        .message {
+            margin-top: 20px;
+            padding: 12px;
+            border-radius: 8px;
+            display: none;
+            font-size: 14px;
+        }
+
+        .success {
+            display: block;
+            background: #f0fdf4;
+            color: #166534;
+            border: 1px solid #bbf7d0;
+        }
+
+        .error {
+            display: block;
+            background: #fef2f2;
+            color: #991b1b;
+            border: 1px solid #fecaca;
+        }
+
+        .demo-notice {
+            margin-top: 25px;
+            padding: 12px 15px;
+            background: #fffbeb;
+            border: 1px solid #fde68a;
+            color: #92400e;
+            border-radius: 8px;
+            font-size: 13px;
+        }
+
+        @media (max-width: 600px) {
+            header {
+                padding: 0 20px;
+            }
+
+            .container {
+                margin: 30px auto;
+            }
+
+            .card {
+                padding: 25px 20px;
+            }
+
+            h1 {
+                font-size: 25px;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
 <header>
 
-```
-<div class="logo">
-    <div class="logo-icon">$</div>
+    <div class="logo">
+        <div class="logo-icon">$</div>
 
-    <div>
-        <span class="logo-dollar">Dollar</span><span class="logo-vault">Vault</span>
+        <div>
+            <span class="logo-dollar">Dollar</span><span class="logo-vault">Vault</span>
+        </div>
     </div>
-</div>
 
-<a href="dashboard.html" class="back-link">
-    ← Dashboard
-</a>
-```
+    <a href="dashboard.html" class="back-link">
+        ← Dashboard
+    </a>
 
 </header>
 
 <div class="container">
 
-```
-<div class="card">
+    <div class="card">
 
-    <h1>Withdraw Demo Funds</h1>
+        <h1>Withdraw Demo Funds</h1>
 
-    <p class="subtitle">
-        Send simulated USDT from your DollarVault demo wallet.
-    </p>
+        <p class="subtitle">
+            Send simulated USDT from your DollarVault demo wallet.
+        </p>
 
-    <div class="balance-box">
+        <div class="balance-box">
 
-        <div class="balance-label">
-            Available Demo Balance
+            <div class="balance-label">
+                Available Demo Balance
+            </div>
+
+            <div class="balance" id="balance">
+                $0.00
+            </div>
+
         </div>
 
-        <div class="balance" id="balance">
-            $0.00
+        <form id="withdrawForm">
+
+            <label for="amount">
+                Withdrawal Amount (USDT)
+            </label>
+
+            <input
+                type="number"
+                id="amount"
+                min="1"
+                step="0.01"
+                placeholder="Enter amount"
+                required
+            >
+
+            <label for="walletAddress">
+                Destination Wallet Address
+            </label>
+
+            <input
+                type="text"
+                id="walletAddress"
+                placeholder="Enter wallet address"
+                required
+            >
+
+            <button
+                type="submit"
+                id="withdrawButton"
+            >
+                Withdraw Demo Funds
+            </button>
+
+        </form>
+
+        <div id="message" class="message"></div>
+
+        <div class="demo-notice">
+            <strong>Demo Only:</strong>
+            This withdrawal is simulated for website testing.
+            No real cryptocurrency is transferred.
         </div>
 
     </div>
-
-    <form id="withdrawForm">
-
-        <label for="amount">
-            Withdrawal Amount (USDT)
-        </label>
-
-        <input
-            type="number"
-            id="amount"
-            min="1"
-            step="0.01"
-            placeholder="Enter amount"
-            required
-        >
-
-        <label for="walletAddress">
-            Destination Wallet Address
-        </label>
-
-        <input
-            type="text"
-            id="walletAddress"
-            placeholder="Enter wallet address"
-            required
-        >
-
-        <button
-            type="submit"
-            id="withdrawButton"
-        >
-            Withdraw Demo Funds
-        </button>
-
-    </form>
-
-    <div
-        id="message"
-        class="message"
-    ></div>
-
-    <div class="demo-notice">
-
-        <strong>Demo Only:</strong>
-        This withdrawal is simulated for website testing.
-        No real cryptocurrency is transferred.
-
-    </div>
-
-</div>
-```
 
 </div>
 
 <script>
 
-const API_URL = "http://127.0.0.1:3000";
-
-
-const loggedInUser =
-    JSON.parse(
-        localStorage.getItem("dollarVaultUser")
-    );
-
+const loggedInUser = JSON.parse(
+    localStorage.getItem("dollarVaultUser")
+);
 
 if (
     !loggedInUser ||
     !loggedInUser.id ||
     !loggedInUser.email
 ) {
-
     window.location.href = "login.html";
-
 }
-
 
 const balanceElement =
     document.getElementById("balance");
@@ -356,78 +335,32 @@ async function loadBalance() {
     try {
 
         const response = await fetch(
-            API_URL +
-            "/api/customer/transactions?userId=" +
-            encodeURIComponent(
-                loggedInUser.id
-            )
+            "/api/customer/balance?userId=" +
+            encodeURIComponent(loggedInUser.id)
         );
 
+        const data = await response.json();
 
-        const transactions =
-            await response.json();
-
-
-        if (
-            !response.ok ||
-            !Array.isArray(transactions)
-        ) {
+        if (!response.ok) {
 
             console.error(
-                "Transaction loading failed:",
-                transactions
+                "Balance loading failed:",
+                data
             );
 
             balanceElement.textContent =
                 "$0.00";
 
             return;
-
         }
 
-
-        let calculatedBalance = 0;
-
-
-        transactions.forEach(
-            function(transaction) {
-
-                const amount =
-                    Number(
-                        transaction.amount || 0
-                    );
-
-
-                if (
-                    transaction.type === "Deposit" &&
-                    transaction.status === "Completed"
-                ) {
-
-                    calculatedBalance += amount;
-
-                }
-
-
-                if (
-                    transaction.type === "Withdrawal" &&
-                    transaction.status === "Completed"
-                ) {
-
-                    calculatedBalance -= amount;
-
-                }
-
-            }
-        );
-
+        const balance =
+            Number(data.balance) || 0;
 
         balanceElement.textContent =
-            "$" +
-            calculatedBalance.toFixed(2);
+            "$" + balance.toFixed(2);
 
-    }
-
-    catch (error) {
+    } catch (error) {
 
         console.error(
             "Balance loading error:",
@@ -436,9 +369,7 @@ async function loadBalance() {
 
         balanceElement.textContent =
             "$0.00";
-
     }
-
 }
 
 
@@ -448,13 +379,11 @@ withdrawForm.addEventListener(
 
         event.preventDefault();
 
-
         const amount =
             Number(amountInput.value);
 
         const walletAddress =
             walletAddressInput.value.trim();
-
 
         messageElement.className =
             "message";
@@ -475,7 +404,6 @@ withdrawForm.addEventListener(
                 "Please enter a valid withdrawal amount.";
 
             return;
-
         }
 
 
@@ -488,7 +416,6 @@ withdrawForm.addEventListener(
                 "Please enter a destination wallet address.";
 
             return;
-
         }
 
 
@@ -501,40 +428,36 @@ withdrawForm.addEventListener(
 
         try {
 
-            const response =
-                await fetch(
-                    API_URL + "/api/withdraw",
-                    {
+            const response = await fetch(
+                "/api/withdraw",
+                {
+                    method: "POST",
 
-                        method: "POST",
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
 
-                        headers: {
-                            "Content-Type":
-                                "application/json"
-                        },
+                    body: JSON.stringify({
 
-                        body:
-                            JSON.stringify({
+                        userId:
+                            loggedInUser.id,
 
-                                userId:
-                                    loggedInUser.id,
+                        name:
+                            loggedInUser.name,
 
-                                name:
-                                    loggedInUser.name,
+                        email:
+                            loggedInUser.email,
 
-                                email:
-                                    loggedInUser.email,
+                        amount:
+                            amount,
 
-                                amount:
-                                    amount,
+                        walletAddress:
+                            walletAddress
 
-                                walletAddress:
-                                    walletAddress
-
-                            })
-
-                    }
-                );
+                    })
+                }
+            );
 
 
             const data =
@@ -560,7 +483,6 @@ withdrawForm.addEventListener(
                     "Withdraw Demo Funds";
 
                 return;
-
             }
 
 
@@ -588,9 +510,7 @@ withdrawForm.addEventListener(
             withdrawButton.textContent =
                 "Withdraw Demo Funds";
 
-        }
-
-        catch (error) {
+        } catch (error) {
 
             console.error(
                 "Withdrawal error:",
@@ -608,7 +528,6 @@ withdrawForm.addEventListener(
 
             withdrawButton.textContent =
                 "Withdraw Demo Funds";
-
         }
 
     }

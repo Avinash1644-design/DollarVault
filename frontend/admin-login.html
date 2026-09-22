@@ -1,9 +1,12 @@
 <!DOCTYPE html>
+
 <html lang="en">
-    <head> <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-       <title>DollarVault - Admin Login</title> 
-</html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DollarVault - Admin Login</title>
+
+```
 <style>
     * {
         box-sizing: border-box;
@@ -170,8 +173,14 @@
         }
     }
 </style>
-</head> <body>
-    <div class="login-card">
+```
+
+</head>
+
+<body>
+
+```
+<div class="login-card">
 
     <div class="logo">
 
@@ -264,7 +273,7 @@
         try {
 
             const response = await fetch(
-                "http://127.0.0.1:3000/api/admin/login",
+                "/api/admin/login",
                 {
                     method: "POST",
 
@@ -314,6 +323,8 @@
 
         } catch (error) {
 
+            console.error("Admin login error:", error);
+
             message.textContent =
                 error.message ||
                 "Unable to connect to the server.";
@@ -327,3 +338,7 @@
 
     });
 </script>
+```
+
+</body>
+</html>
